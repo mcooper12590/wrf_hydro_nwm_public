@@ -1325,6 +1325,8 @@ subroutine initLdasDict(ldasOutDict,procId,diagFlag)
                             40,40,40, &             !108-110
                             40,40,40, &             !111-113
                             40,1,1]                 !114-116
+   ldasOutDict%numLev(60:61) = nlst(1)%nsoil ! Set soil levels from namelist
+   ldasOutDict%numLev(63) = nlst(1)%nsoil ! Set soil levels from namelist
    ldasOutDict%numLev(105:114) = ldasOutDict%act_lev ! Set crocus levels to number from namelist
 
    ldasOutDict%missingReal(:) = [-9999.0,-9999.0,-9999.0,-9999.0,-9999.0, & !1-5
@@ -2512,7 +2514,7 @@ subroutine initLsmOutDict(lsmOutDict,procId,diagFlag)
       endif
 
    endif
-
+   ! No clean way to implement n layers with how this is implemented
    lsmOutDict%varNames(:) = [character(len=64) :: "stc1","smc1","sh2ox1","stc2",&
                              "smc2","sh2ox2","stc3","smc3","sh2ox3","stc4",&
                              "smc4","sh2ox4","infxsrt","sfcheadrt"]

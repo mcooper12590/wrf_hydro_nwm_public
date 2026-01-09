@@ -391,11 +391,11 @@ Contains
     call get_2d_netcdf("STEMP_1",    ncid, stc(:,:,1), units,  ix, jx, .TRUE., ierr)
     call get_2d_netcdf("STEMP_2",    ncid, stc(:,:,2), units,  ix, jx, .TRUE., ierr)
     call get_2d_netcdf("STEMP_3",    ncid, stc(:,:,3), units,  ix, jx, .TRUE., ierr)
-    call get_2d_netcdf("STEMP_4",    ncid, stc(:,:,4), units,  ix, jx, .TRUE., ierr)
+    call get_2d_netcdf("STEMP_4",    ncid, stc(:,:,4), units,  ix, jx, .TRUE., ierr) ! hardcoded 4 but this subroutine is not used
     call get_2d_netcdf("SMOIS_1",    ncid, smc(:,:,1), units,  ix, jx, .TRUE., ierr)
     call get_2d_netcdf("SMOIS_2",    ncid, smc(:,:,2), units,  ix, jx, .TRUE., ierr)
     call get_2d_netcdf("SMOIS_3",    ncid, smc(:,:,3), units,  ix, jx, .TRUE., ierr)
-    call get_2d_netcdf("SMOIS_4",    ncid, smc(:,:,4), units,  ix, jx, .TRUE., ierr)
+    call get_2d_netcdf("SMOIS_4",    ncid, smc(:,:,4), units,  ix, jx, .TRUE., ierr) ! hardcoded 4 but this subroutine is not used
 
 
     if (ierr_snodep /= 0) then
@@ -831,7 +831,7 @@ Contains
           call get2d_hrldas_real("TSKIN",   ncid, t1,      ix, jx)
           call get2d_hrldas_real("SWE",      ncid, weasd,   ix, jx)
           call get2d_hrldas_real("SNODEP",     ncid, snodep,   ix, jx)
-
+    ! Hardcodes but this subroutine is not used
     call get2d_hrldas_real("SOIL_T_1",    ncid, stc(:,:,1),  ix, jx)
     call get2d_hrldas_real("SOIL_T_2",    ncid, stc(:,:,2),  ix, jx)
     call get2d_hrldas_real("SOIL_T_3",    ncid, stc(:,:,3),  ix, jx)

@@ -2207,7 +2207,7 @@ subroutine output_rt_NWM(domainId,iGrid)
 
       ! Specify the number of vertical levels we are dealing with
       if(iTmp2 .eq. 5) then
-         numLev = 4
+         numLev = nlst(1)%nsoil
       else
          numLev = 1
       endif
@@ -3911,6 +3911,7 @@ subroutine output_lsmOut_NWM(domainId)
 
    ! Loop through all possible variables to output. Collect the data to the
    ! global grid and output to the necessary NetCDF variable.
+   ! Hardcoded 4 soil layers here, but no clean way to change to variable
    do iTmp=1,fileMeta%numVars
       if(fileMeta%outFlag(iTmp) .eq. 1) then
          ! Allocate memory necessary

@@ -813,7 +813,7 @@ CONTAINS
        parameters%rsurf_snow = RSURFSNOW_2D(I,J)  ! surface resistence for snow [s/m]
        parameters%scamax = SCAMAX_2D(I,J)         ! maximum fractional snow covered area (0.0-1.0)
 #endif
-       CALL TRANSFER_MP_PARAMETERS(VEGTYP,SOILTYP,SLOPETYP,SOILCOLOR,CROPTYPE,parameters,iopt_imperv)
+       CALL TRANSFER_MP_PARAMETERS(VEGTYP,SOILTYP,SLOPETYP,SOILCOLOR,NSOIL,CROPTYPE,parameters,iopt_imperv)
 
        GRAIN = 0.0                ! mass of grain [g/m2]
        GDD   = 0.0                ! growing degree days
@@ -1515,7 +1515,7 @@ CONTAINS
   END SUBROUTINE noahmplsm
 !------------------------------------------------------
 
-SUBROUTINE TRANSFER_MP_PARAMETERS(VEGTYPE,SOILTYPE,SLOPETYPE,SOILCOLOR,CROPTYPE,parameters,iopt_imperv)
+SUBROUTINE TRANSFER_MP_PARAMETERS(VEGTYPE,SOILTYPE,SLOPETYPE,SOILCOLOR,NSOIL,CROPTYPE,parameters,iopt_imperv)
 
   USE NOAHMP_TABLES
   USE MODULE_SF_NOAHMPLSM
@@ -1526,6 +1526,7 @@ SUBROUTINE TRANSFER_MP_PARAMETERS(VEGTYPE,SOILTYPE,SLOPETYPE,SOILCOLOR,CROPTYPE,
   INTEGER, INTENT(IN)    :: SOILTYPE
   INTEGER, INTENT(IN)    :: SLOPETYPE
   INTEGER, INTENT(IN)    :: SOILCOLOR
+  INTEGER, INTENT(IN)    :: NSOIL
   INTEGER, INTENT(IN)    :: CROPTYPE
   INTEGER, INTENT(IN)    :: iopt_imperv
 
@@ -1691,6 +1692,15 @@ SUBROUTINE TRANSFER_MP_PARAMETERS(VEGTYPE,SOILTYPE,SLOPETYPE,SOILCOLOR,CROPTYPE,
 ! ----------------------------------------------------------------------
 
 #ifndef SPATIAL_SOIL
+    allocate(parameters%BEXP(NSOIL))
+    allocate(parameters%DKSAT(NSOIL))
+    allocate(parameters%DSWAT(NSOIL))
+    allocate(parameters%PSISAT(NSOIL))
+    allocate(parameters%QUARTZ(NSOIL))
+    allocate(parameters%SMCDRY(NSOIL))
+    allocate(parameters%SMCWLT(NSOIL))
+    allocate(parameters%SMCREF(NSOIL))
+    allocate(parameters%SMCMAX(NSOIL))
     parameters%BEXP   = BEXP_TABLE   (SOILTYPE)
     parameters%DKSAT  = DKSAT_TABLE  (SOILTYPE)
     parameters%DWSAT  = DWSAT_TABLE  (SOILTYPE)
@@ -1777,7 +1787,7 @@ SUBROUTINE PEDOTRANSFER_SR2006(nsoil,sand,clay,orgm,parameters)
   type(noahmp_parameters), intent(inout) :: parameters
   integer :: k
 
-  do k = 1,4
+  do k = 1,nsoil
     if(sand(k) <= 0 .or. clay(k) <= 0) then
       sand(k) = 0.41
       clay(k) = 0.18
